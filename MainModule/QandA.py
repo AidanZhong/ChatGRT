@@ -5,17 +5,17 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-from IntentMatching import yes_or_no
+from Utility.IntentMatching import yes_or_no
 
 logging.basicConfig(
-    filename="HAI.log",
+    filename="../Data/HAI.log",
     filemode="a",
     format="%(asctime)s - %(levelname)s - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
     level=logging.INFO
 )
 
-sys.path.append('./')
+sys.path.append('../')
 
 
 def process_with_user_said(user_said):
@@ -25,7 +25,7 @@ def process_with_user_said(user_said):
     :return: nothing
     """
     user_said = input('Yes, please feel free to ask!\n')
-    data = pd.read_csv('./corpus/QandA.csv')
+    data = pd.read_csv('../Data/corpus/QandA.csv')
     vectorizer = TfidfVectorizer()
     tfidf = vectorizer.fit_transform(data['Question'])
 

@@ -1,5 +1,5 @@
-from CommonUtils import DatabaseUtils
-import IdentityMatching, IntentMatching
+from Utility.CommonUtils import DatabaseUtils
+from Utility import IdentityMatching, IntentMatching
 import QandA
 
 print('---------Welcome to ChatGRP---------')

@@ -5,7 +5,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-sys.path.append('./')
+sys.path.append('../')
 
 
 def yes_or_no(msg):
@@ -13,7 +13,7 @@ def yes_or_no(msg):
     :param msg: response from the user
     :return: yes or no
     """
-    with open('./corpus/yes_or_no.data', 'r') as f:
+    with open('../Data/corpus/yes_or_no.data', 'r') as f:
         data = f.readlines()
     yes_corpus = data[0].split(',')
     no_corpus = data[1].split(',')
@@ -39,7 +39,7 @@ def get_intent(s):
     :param s: input string
     :return: the user's intent
     """
-    data = pd.read_csv('./corpus/intents.data')
+    data = pd.read_csv('../Data/corpus/intents.data')
     all_sentences = [sent for sentences in data['phrases'].values for sent in sentences.split(';')] + [s]
     vectorizer = TfidfVectorizer()
     vectors = vectorizer.fit_transform(all_sentences)

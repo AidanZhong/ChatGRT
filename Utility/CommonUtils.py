@@ -9,7 +9,7 @@ class DatabaseUtils:
     def execute_query(query):
         try:
             # Connect to the database
-            connection = sqlite3.connect('HAIIIIIIIIII.db')
+            connection = sqlite3.connect('../Data/HAIIIIIIIIII.db')
 
             # Create a cursor to execute the query
             cursor = connection.cursor()

@@ -3,7 +3,8 @@ import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-import CommonUtils, IntentMatching, Greetings
+import CommonUtils, IntentMatching
+from MainModule import Greetings
 
 
 def identity_matching():
@@ -39,7 +40,7 @@ def get_name_from_response(res):
     :param res: response message
     :return: name
     """
-    with open('./corpus/Name_saying', 'r') as f:
+    with open('../Data/corpus/Name_saying', 'r') as f:
         patterns = f.readlines()
 
     pattern_with_placeholder = [pattern.replace("XXX", "(.*)").strip() for pattern in patterns]
