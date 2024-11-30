@@ -1,3 +1,7 @@
+import sys
+
+sys.path.append('../Utility')
+
 from Utility.CommonUtils import DatabaseUtils
 from Utility import IdentityMatching, IntentMatching
 import QandA
