@@ -25,13 +25,16 @@ Just run the MainProcess.py, then follow the prompt
   - Main interaction loop.
 
 - **FlightTicketBooking.py**  
-  Handle the transaction of booking a flight. 
+  Handle the transaction of booking a flight.
 
 - **SmallTalk.py**  
   Handles predefined conversational responses for small talk.
 
 - **Greetings.py**  
   Handle greetings.
+
+- **QandA.py**  
+  Handle question and answers.
 
 ### 2. Utility Modules
 - **intent_matching.py**  
@@ -41,14 +44,8 @@ Just run the MainProcess.py, then follow the prompt
 - **identity_management.py**  
   Handles user identification (e.g., storing and recalling names).
 
-- **nlp_utils.py**  
-  Tokenization, stemming, lemmatization, and other text-processing utilities.
-
-- **database.py**  
-  Mock or actual database to store user information, transactions, and other data.
-
-- **config.py**  
-  Configurable settings for prompts, error messages, and other constants.
+- **similarity.py**  
+  Handles similarity checking.
 
 ### 3. Data Files
 - **data/**  
@@ -70,6 +67,9 @@ Just run the MainProcess.py, then follow the prompt
 
 ---
 
+### 6. Transactional function (flight ticket booking)
+
+
 ## Functional Structure
 
 1. **Initialization**
@@ -83,7 +83,6 @@ Just run the MainProcess.py, then follow the prompt
    - Predict user intent using:
      - Rule-based patterns (e.g., regex).
      - Similarity-based methods (e.g., cosine similarity with TF-IDF).
-     - Optional ML-based intent classifier.
 
 4. **Intent Handling**
    - Route user input to the relevant handler (e.g., transaction, identity management).

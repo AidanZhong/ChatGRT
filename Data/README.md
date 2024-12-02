@@ -1,4 +1,4 @@
-- **data/**  
+- **corpus/**  
   Contains datasets, predefined intents, and small talk responses.
 
 - **logs/**  
