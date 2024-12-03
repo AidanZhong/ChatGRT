@@ -4,6 +4,7 @@ sys.path.append('../Utility')
 
 from Utility.CommonUtils import DatabaseUtils
 from Utility import IdentityMatching, IntentMatching
+import FlightTicketBooking
 import QandA
 
 print('---------Welcome to ChatGRP---------')
@@ -19,8 +20,7 @@ while True:
     elif intent == 'what_can_you_do':
         print('I can do small talking, remember your name, help you book a flight ticket, and also Q&A !')
     elif intent == 'Flight':
-        print('Flight booking system under maintenance, try something else')
-        # todo finish the booking system
+        FlightTicketBooking.FlightTicketBooking().process_flight_ticket_booking()
     elif intent == 'Small_talk':
         print('As long as you are using me, it is my good day!')
     elif intent == 'Q&A':

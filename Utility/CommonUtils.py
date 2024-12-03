@@ -1,7 +1,19 @@
 import sqlite3
+import random
 from datetime import datetime
 
 import pandas as pd
+
+
+def randomly_get_from_file(filename):
+    corpus = get_corpus_from_file(filename)
+    print(random.choice(corpus))
+
+
+def get_corpus_from_file(filename):
+    with open(filename, 'r', encoding='utf-8') as f:
+        corpus = f.readlines()
+        return [s.strip() for s in corpus]
 
 
 class DatabaseUtils:
