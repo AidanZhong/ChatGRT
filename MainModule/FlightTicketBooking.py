@@ -1,9 +1,10 @@
-from nltk import corpus
+import re
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import re
-import random
+
 import Utility.CommonUtils as CommonUtils
+from Utility.IntentMatching import yes_or_no
 
 
 class FlightTicketBooking:
@@ -23,11 +24,8 @@ class FlightTicketBooking:
         """
         Main process of the ticket booking
         """
-        flag = False
-        while not flag:
-            self.data_collection()
-            print(self)
-            flag = self.data_confirmation_and_correction()
+        self.data_collection()
+        self.data_confirmation_and_correction()
         self.flight_search()
         self.provide_information()
 
@@ -47,16 +45,38 @@ class FlightTicketBooking:
         FlightTicketBooking.generate_prompts('departure_time')
         self.departure_time = FlightTicketBooking.input_parsing('departure_time', input())
 
+
     def data_confirmation_and_correction(self):
         """
         Confirm collected inputs with the user.
         """
-        return False
+        complete = False
+        while not complete:
+            print(self)
+            print('This is your travel information. Is it correct? If not, which information you want to correct?')
+            s = input()
+            if yes_or_no(s):
+                complete = True
+                print('Ticket information confirmed.')
+            else:
+                if "origin" in s.lower():
+                    print("Please input the origin")
+                    self.origin = FlightTicketBooking.input_parsing('origin', input())
+                elif "destination" in s.lower():
+                    print("Please input the destination")
+                    self.destination = FlightTicketBooking.input_parsing('destination', input())
+                elif "date" in s.lower() or "time" in s.lower():
+                    print("Please input the date")
+                    self.departure_time = FlightTicketBooking.input_parsing('departure_time', input())
+                else:
+                    print("Correction detected, but field not specified.")
 
     def flight_search(self):
         """
         Once data is confirmed, the bot queries the Google Flights API to find available flights.
         """
+        print("Start searching for flights...")
+        # todo
 
     def provide_information(self):
         """
@@ -64,6 +84,7 @@ class FlightTicketBooking:
         2. store the users trip
         3. ask if the user want to travel back next time he entered the system
         """
+        # todo
 
     @staticmethod
     def input_parsing(keyword, res):
