@@ -1,6 +1,6 @@
 # How to use
 
-Just run the MainProcess.py, then follow the prompt
+Just run the main.py, then follow the prompt
 
 # Architecture
 
@@ -106,53 +106,3 @@ Just run the MainProcess.py, then follow the prompt
    - Generate and display responses in a user-friendly format.
 
 ---
-
-## 7-Day Plan
-
-### Day 1: Planning & Setup
-- **Goal**: Set up the project structure and environment.
-- **Tasks**:
-  - Create the folder structure and initialize Python files.
-  - Install dependencies (e.g., NLTK, scikit-learn).
-  - Mock intents, responses, and sample transactions.
-
-### Day 2: Intent Matching
-- **Goal**: Build and test the intent-matching system.
-- **Tasks**:
-  - Implement a rule-based intent matcher.
-  - Add basic intents (e.g., "book", "order", "help").
-  - Test intent detection on various inputs.
-
-### Day 3: Core Functionalities
-- **Goal**: Implement identity management and transaction handling.
-- **Tasks**:
-  - Write logic for recognizing and storing user names.
-  - Design a multi-turn dialogue flow for transactions.
-  - Test the transaction logic for one scenario (e.g., booking a ticket).
-
-### Day 4: NLP Enhancements
-- **Goal**: Add natural language processing features.
-- **Tasks**:
-  - Implement preprocessing (tokenization, stemming).
-  - Improve intent matching with similarity-based techniques (e.g., TF-IDF).
-  - Integrate small talk responses.
-
-### Day 5: Error Handling & Personalization
-- **Goal**: Enhance user experience.
-- **Tasks**:
-  - Add error-handling mechanisms for invalid inputs.
-  - Implement personalized responses using stored user data.
-
-### Day 6: Testing & Refinement
-- **Goal**: Ensure robustness and usability.
-- **Tasks**:
-  - Test the system end-to-end with different scenarios.
-  - Log and fix bugs.
-  - Enhance conversational design (e.g., confirmations, contextual prompts).
-
-### Day 7: Demo Video & Documentation
-- **Goal**: Finalize deliverables.
-- **Tasks**:
-  - Record a demo video showcasing all features.
-  - Write the report draft, including system architecture and evaluation.
-  - Review and submit the project.

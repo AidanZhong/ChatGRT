@@ -117,7 +117,7 @@ class FlightTicketBooking:
 
     def flight_search(self):
         """
-        Once data is confirmed, the bot queries the Google Flights API to find available flights.
+        Once data is confirmed, the bot queries the database.
         """
         print("Start searching for flights...")
         self.res = CommonUtils.DatabaseUtils.query_flight_info(self.origin, self.destination, self.departure_time)
@@ -130,9 +130,7 @@ class FlightTicketBooking:
 
     def information_confirmation(self):
         """
-        1. let user choose the flight or go to data correction
-        2. store the users trip
-        3. ask if the user want to travel back next time he entered the system
+        let user choose the flight or go to data correction
         """
         while True:
             print('Which flight do you want to check?')
