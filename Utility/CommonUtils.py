@@ -1,11 +1,16 @@
 import sqlite3
 import random
-import pandas as pd
-import random
 from datetime import datetime, timedelta
-from datetime import datetime
 
-import pandas as pd
+cities = [
+    "Tokyo", "Delhi", "Beijing", "Brasília", "Mexico City", "Cairo", "Dhaka",
+    "Jakarta", "Islamabad", "Buenos Aires", "Abuja", "Manila", "Ankara",
+    "Washington, D.C.", "Moscow", "Seoul", "Bangkok", "Kuala Lumpur", "Paris",
+    "London", "Madrid", "Rome", "Berlin", "Hanoi", "Canberra", "Ottawa",
+    "Riyadh", "Tehran", "Baghdad", "Nairobi", "Pretoria", "Addis Ababa", "Lima",
+    "Bogotá", "Santiago", "Bangui", "Athens", "Warsaw", "Amsterdam",
+    "Brussels", "Vienna", "Lisbon", "Oslo", "Stockholm", "Copenhagen",
+    "Helsinki", "Reykjavik", "Zagreb", "Prague", "Budapest"]
 
 
 def randomly_get_from_file(filename):
@@ -60,6 +65,20 @@ class DatabaseUtils:
                                     "DEPARTURE_TIME TIMESTAMP NOT NULL);")
 
     @staticmethod
+    def query_flight_info(origin, destination, departure_time):
+        departure_datetime = datetime.strptime(departure_time, "%Y-%m-%d %H:%M:%S")
+        end_datetime = departure_datetime + timedelta(days=2)
+
+        query = f"""
+                SELECT * FROM FLIGHTS_INFO
+                WHERE ORIGIN = '{origin}'
+                  AND DESTINATION = '{destination}'
+                  AND DEPARTURE_TIME >= '{departure_datetime.strftime('%Y-%m-%d %H:%M:%S')}'
+                  AND DEPARTURE_TIME <= '{end_datetime.strftime('%Y-%m-%d %H:%M:%S')}'
+                """
+        return DatabaseUtils.execute_query(query)
+
+    @staticmethod
     def insert_data(origin, destination, departure_time):
         DatabaseUtils.execute_query(f"""
         INSERT INTO FLIGHTS_INFO (ORIGIN, DESTINATION, DEPARTURE_TIME)
@@ -68,20 +87,12 @@ class DatabaseUtils:
 
     @staticmethod
     def generate_data():
-
+        global cities
         num_records = 2000
         start_date = datetime(2024, 12, 13, 0, 0)
         end_date = datetime(2026, 1, 15, 23, 59)
 
-        locations = [
-            "Tokyo", "Delhi", "Beijing", "Brasília", "Mexico City", "Cairo", "Dhaka",
-            "Jakarta", "Islamabad", "Buenos Aires", "Abuja", "Manila", "Ankara",
-            "Washington, D.C.", "Moscow", "Seoul", "Bangkok", "Kuala Lumpur", "Paris",
-            "London", "Madrid", "Rome", "Berlin", "Hanoi", "Canberra", "Ottawa",
-            "Riyadh", "Tehran", "Baghdad", "Nairobi", "Pretoria", "Addis Ababa", "Lima",
-            "Bogotá", "Santiago", "Bangui", "Athens", "Warsaw", "Amsterdam",
-            "Brussels", "Vienna", "Lisbon", "Oslo", "Stockholm", "Copenhagen",
-            "Helsinki", "Reykjavik", "Zagreb", "Prague", "Budapest"]
+        locations = cities
 
         for i in range(num_records):
             origin = random.choice(locations)
