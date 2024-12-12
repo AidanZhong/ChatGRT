@@ -48,6 +48,8 @@ def process_with_user_said(user_said):
             if not yes_or_no(continue_or_not):
                 print('Thanks for using the Q&A session, what else can I do for you?')
                 break
+            else:
+                print('Please feel free to ask!')
         else:
             print('Can you restate your question?')
         user_said = input()

@@ -66,13 +66,14 @@ class DatabaseUtils:
 
     @staticmethod
     def query_flight_info(origin, destination, departure_time):
-        departure_datetime = datetime.strptime(departure_time, "%Y-%m-%d %H:%M:%S")
+        departure_datetime = datetime.strptime(departure_time, "%Y-%m-%d")
         end_datetime = departure_datetime + timedelta(days=2)
-
+        origin = origin[0].upper() + origin[1:].lower()
+        destination = destination[0].upper() + destination[1:].lower()
         query = f"""
                 SELECT * FROM FLIGHTS_INFO
-                WHERE ORIGIN = '{origin}'
-                  AND DESTINATION = '{destination}'
+                WHERE ORIGIN like '%{origin.rstrip()}%'
+                  AND DESTINATION like '%{destination.rstrip()}%'
                   AND DEPARTURE_TIME >= '{departure_datetime.strftime('%Y-%m-%d %H:%M:%S')}'
                   AND DEPARTURE_TIME <= '{end_datetime.strftime('%Y-%m-%d %H:%M:%S')}'
                 """

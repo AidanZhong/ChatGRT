@@ -29,8 +29,20 @@ class FlightTicketBooking:
         """
         self.data_collection()
         self.data_confirmation_and_correction()
-        self.flight_search()
+        while not self.flight_search():
+            res = input()
+            if not IntentMatching.yes_or_no(res):
+                print('Thanks for using Flight Ticket Booking, what else can i do for you?')
+                return
+            self.data_collection()
+            self.data_confirmation_and_correction()
         self.information_confirmation()
+        print('Would you like to continue to book another flight ticket?')
+        res = input()
+        if not IntentMatching.yes_or_no(res):
+            print('Thanks for using Flight Ticket Booking, what else can i do for you?')
+        else:
+            self.process_flight_ticket_booking()
 
     def data_collection(self):
         """
@@ -46,12 +58,22 @@ class FlightTicketBooking:
 
         # 3. departure time
         FlightTicketBooking.generate_prompts('departure_time')
+        print('In YYYY-MM-DD format')
         self.departure_time = FlightTicketBooking.input_parsing('departure_time', input())
 
     def data_confirmation_and_correction(self):
         """
         Confirm collected inputs with the user.
         """
+        while not self.data_validation('origin', self.origin):
+            print(f'Origin {self.origin} not found, please try again.')
+            self.origin = FlightTicketBooking.input_parsing('origin', input())
+        while not self.data_validation('destination', self.destination):
+            print('Destination not found, please try again.')
+            self.destination = FlightTicketBooking.input_parsing('destination', input())
+        while not self.data_validation('departure_time', self.departure_time):
+            print('Departure time not valid, it should be in the YYYY-MM-DD and should be in the future')
+            self.departure_time = FlightTicketBooking.input_parsing('departure_time', input())
         complete = False
         while not complete:
             print(self)
@@ -65,7 +87,7 @@ class FlightTicketBooking:
                     print("Please input the origin")
                     self.origin = FlightTicketBooking.input_parsing('origin', input())
                     while not self.data_validation('origin', self.origin):
-                        print('Origin not found, please try again.')
+                        print(f'Origin {self.origin} not found, please try again.')
                         self.origin = FlightTicketBooking.input_parsing('origin', input())
                 elif "destination" in s.lower():
                     print("Please input the destination")
@@ -84,10 +106,10 @@ class FlightTicketBooking:
 
     def data_validation(self, target, data):
         if target == 'origin' or target == 'destination':
-            return data.lower() in CommonUtils.cities
+            return data[0].upper() + data[1:].lower() in CommonUtils.cities
         if target == 'departure_time':
             try:
-                date_obj = datetime.strptime(data, "YYYY-MM-DD")
+                date_obj = datetime.strptime(data, "%Y-%m-%d")
                 return date_obj > datetime.now()
             except ValueError:
                 return False
@@ -99,8 +121,12 @@ class FlightTicketBooking:
         """
         print("Start searching for flights...")
         self.res = CommonUtils.DatabaseUtils.query_flight_info(self.origin, self.destination, self.departure_time)
+        if not self.res:
+            print('Sorry, there is no flight information available. Do you want to try again?')
+            return False
         for flight in self.res:
             print(flight)
+        return True
 
     def information_confirmation(self):
         """
@@ -108,17 +134,25 @@ class FlightTicketBooking:
         2. store the users trip
         3. ask if the user want to travel back next time he entered the system
         """
-        print('Which flight do you want to check?')
-        try:
-            flight = int(input())
-            print(f'Your flight is {self.res[flight]}, please confirm your order')
-            response = input()
-            if IntentMatching.yes_or_no(response):
-                print('Ticket confirmed.')
-            else:
-                print("Order cancelled.")
-        except Exception:
-            print("Please enter a valid flight number.")
+        while True:
+            print('Which flight do you want to check?')
+            try:
+                flight = int(input())
+                for f in self.res:
+                    if flight == f[0]:
+                        print(f'Your flight is {f}, please confirm your order')
+                        break
+                else:
+                    print("Please enter a valid flight number.")
+                    continue
+                response = input()
+                if IntentMatching.yes_or_no(response):
+                    print('Ticket confirmed.')
+                else:
+                    print("Order cancelled.")
+                break
+            except Exception:
+                print("Please enter a valid flight number.")
 
     @staticmethod
     def input_parsing(keyword, res):
