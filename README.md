@@ -1,6 +1,6 @@
 # How to use
 
-Just run the main.py, then follow the prompt
+Just run the MainProcess.py in folder MainModule, then follow the prompt
 
 # Architecture
 
